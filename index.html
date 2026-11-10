@@ -419,6 +419,54 @@ footer {
  .command-motto {font-size:8px;letter-spacing:.08em;white-space:normal;}
  .command-header::before,.command-header::after {display:none;}
 }
+
+/* v0.6 — reversible atmospheric header and backdrop refinement */
+#home { position:relative; isolation:isolate; min-height:100%; overflow:hidden; }
+#home::before {
+  content:""; position:absolute; pointer-events:none; z-index:-1;
+  left:0; right:0; bottom:0; height:38%; opacity:.42;
+  background:linear-gradient(180deg,transparent 0%,#07303b22 65%,#00f0e812 100%);
+}
+#home::after {
+  content:""; position:absolute; pointer-events:none; z-index:-1;
+  left:0; right:0; bottom:0; height:31%; opacity:.42;
+  background:linear-gradient(0deg,#00cdd51c,transparent 75%);
+  clip-path:polygon(0 86%,7% 71%,13% 82%,21% 49%,30% 83%,39% 61%,48% 89%,58% 40%,66% 75%,74% 53%,82% 84%,91% 47%,100% 80%,100% 100%,0 100%);
+  border-bottom:1px solid #00f0e844;
+}
+#home .content { position:relative; z-index:1; }
+.command-header { isolation:isolate; background:radial-gradient(ellipse at 50% 125%,#08778a4d,transparent 68%),linear-gradient(180deg,#06141e,#0a2630 86%,#06131c); }
+.command-header::before,.command-header::after {width:12%;opacity:.35;}
+.command-identity { width:100%; position:relative; justify-content:center; }
+.command-header .command-identity img {
+  position:absolute; left:clamp(12px,3.8vw,62px); top:50%;
+  transform:translateY(-50%); width:110px; height:110px;
+  filter:drop-shadow(0 0 14px #00f0e8cc);
+}
+.command-wordmark { align-items:center; text-align:center; }
+.command-name {
+  color:#d6e7f1;
+  background:linear-gradient(180deg,#ffffff 0%,#d6f4ff 22%,#77909e 47%,#f8ffff 54%,#9ab2c1 77%,#e4f5ff 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:none;
+  filter:drop-shadow(0 2px 1px #000a) drop-shadow(0 0 10px #00f0e83a);
+}
+.command-subtitle { text-align:center; }
+@media(min-width:701px) and (max-height:760px) {
+  .command-header .command-identity img { width:100px; height:100px; left:clamp(8px,2vw,30px); }
+}
+@media(min-width:701px) and (max-width:1000px) {
+  .command-header .command-identity img {width:75px;height:75px;left:6px;}
+  .command-name {font-size:clamp(26px,3.6vw,42px);}
+}
+@media(max-width:700px) {
+  .command-identity {justify-content:flex-end;padding-left:60px;}
+  .command-header .command-identity img {left:0;width:56px;height:56px;}
+  .command-wordmark {align-items:center;}
+  .command-name {font-size:clamp(22px,6vw,34px);}
+}
+
 </style>
 </head>
 <body>
@@ -455,7 +503,7 @@ footer {
       <span>⚙</span>Settings
     </button>
   </nav>
-  <div class="sidebar-foot">SYSTEM v0.5 LAYOUT</div>
+  <div class="sidebar-foot">SYSTEM v0.6 LAYOUT</div>
 </aside>
 
 <main>
@@ -561,7 +609,7 @@ footer {
           <div class="panel">
             <h4>DEVELOPMENT</h4>
             <p>
-              Version 0.5<br>
+              Version 0.6<br>
               Cinematic artwork<br>
               iPad-first design
             </p>
@@ -590,7 +638,7 @@ footer {
   </div>
 
   <footer>
-    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.5
+    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.6
   </footer>
 </main>
 </div>
