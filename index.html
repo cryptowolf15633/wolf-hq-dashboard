@@ -467,12 +467,39 @@ footer {
   .command-name {font-size:clamp(22px,6vw,34px);}
 }
 
+
+/* v0.7 — sidebar insignia, condensed metallic wordmark, scenic header */
+#home::before,#home::after {display:none!important;}
+.sidebar-mark {display:flex;justify-content:center;align-items:center;height:112px;padding:4px 0 8px;}
+.sidebar-mark img {display:block;width:100px;height:100px;object-fit:contain;filter:drop-shadow(0 0 15px #00f0e8b0);}
+.command-header {height:120px;min-height:120px;isolation:isolate;background:linear-gradient(180deg,#06131c,#08212c);}
+.command-header::before,.command-header::after {display:none;}
+.header-landscape {position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.78;}
+.command-identity {z-index:1;}
+.command-header .command-identity img {display:none!important;}
+.command-name {font-family:Impact,'Arial Narrow','Helvetica Neue',Arial,sans-serif;font-stretch:condensed;font-weight:900;letter-spacing:.025em;font-size:clamp(37px,4.3vw,62px);line-height:1.02;}
+.command-subtitle {letter-spacing:.17em;}
+@media(min-width:701px) and (max-height:760px){
+ .sidebar-mark {height:80px;padding:0 0 5px;}
+ .sidebar-mark img {width:74px;height:74px;}
+ .command-header {height:105px;min-height:105px;}
+ .command-name {font-size:clamp(35px,4vw,54px);}
+}
+@media(max-width:700px){
+ .sidebar-mark {display:flex;height:66px;padding:2px;}
+ .sidebar-mark img {width:60px;height:60px;}
+ .command-header {height:102px;min-height:102px;}
+ .command-identity {padding-left:0;justify-content:center;}
+ .command-name {font-size:clamp(29px,7vw,43px);}
+ .command-subtitle {font-size:8px;letter-spacing:.08em;}
+}
+
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
-  <div class="sidebar-mark" aria-hidden="true">///</div>
+  <div class="sidebar-mark"><img src="wolf-logo.png" alt="WOLF HQ wolf insignia"></div>
 
   <nav aria-label="Main navigation">
     <button class="navbtn active" data-page="home">
@@ -503,14 +530,27 @@ footer {
       <span>⚙</span>Settings
     </button>
   </nav>
-  <div class="sidebar-foot">SYSTEM v0.6 LAYOUT</div>
+  <div class="sidebar-foot">SYSTEM v0.7 LAYOUT</div>
 </aside>
 
 <main>
   <div id="home" class="view active">
     <header class="command-header">
+      <svg class="header-landscape" viewBox="0 0 1200 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#07131e"/><stop offset=".6" stop-color="#0a2836"/><stop offset="1" stop-color="#06131c"/></linearGradient>
+          <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0c3648" stop-opacity=".95"/><stop offset="1" stop-color="#06131c" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#06131c" stop-opacity=".05"/><stop offset=".5" stop-color="#06131c" stop-opacity=".65"/><stop offset="1" stop-color="#06131c" stop-opacity=".05"/></linearGradient>
+        </defs>
+        <rect width="1200" height="160" fill="url(#sky)"/>
+        <path d="M0 130 L105 79 149 105 244 26 326 106 402 62 490 124 560 88 648 130 736 74 802 108 917 24 1004 102 1088 58 1200 121 1200 160 0 160Z" fill="url(#mount)"/>
+        <path d="M0 130 L105 79 149 105 244 26 326 106 402 62 490 124 M648 130 L736 74 802 108 917 24 1004 102 1088 58 1200 121" fill="none" stroke="#00cddc" stroke-width="1.5" opacity=".54"/>
+        <path d="M186 73 L244 26 281 70 M878 65 L917 24 953 65 M1025 86 L1088 58 1132 89" fill="none" stroke="#8beeff" stroke-width="1.2" opacity=".52"/>
+        <path d="M0 140 Q230 110 400 144 T800 140 T1200 135" fill="none" stroke="#00f0e8" stroke-width="1" opacity=".18"/>
+        <rect width="1200" height="160" fill="url(#fade)"/>
+      </svg>
+
       <div class="command-identity">
-        <img src="wolf-logo.png" alt="WOLF HQ geometric wolf emblem">
         <div class="command-wordmark">
           <div class="command-name">WOLF HQ</div>
           <div class="command-subtitle">PERSONAL COMMAND CENTER</div>
@@ -609,7 +649,7 @@ footer {
           <div class="panel">
             <h4>DEVELOPMENT</h4>
             <p>
-              Version 0.6<br>
+              Version 0.7<br>
               Cinematic artwork<br>
               iPad-first design
             </p>
@@ -638,7 +678,7 @@ footer {
   </div>
 
   <footer>
-    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.6
+    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.7
   </footer>
 </main>
 </div>
