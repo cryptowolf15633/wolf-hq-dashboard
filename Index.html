@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06131c">
+<title>WOLF HQ | Command Center</title>
+<style>
+:root {
+  --bg:#06131c;
+  --panel:#0a202a;
+  --cyan:#00f0e8;
+  --text:#e6f7fa;
+  --muted:#8caeb9;
+  --line:#24505a;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button { font:inherit; cursor:pointer; }
+button:focus-visible {
+  outline:2px solid white;
+  outline-offset:3px;
+}
+.app {
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:210px minmax(0,1fr);
+}
+.sidebar {
+  background:#071820;
+  border-right:1px solid var(--line);
+  padding:25px 14px;
+}
+.brand {
+  text-align:center;
+  padding:12px 0 28px;
+  border-bottom:1px solid var(--line);
+}
+.brand img {
+  display:block;
+  width:125px;
+  max-width:100%;
+  height:auto;
+  margin:0 auto 12px;
+  filter:drop-shadow(0 0 12px #00f0e844);
+}
+.brand h2 {
+  color:var(--cyan);
+  letter-spacing:4px;
+  margin:10px 0 5px;
+}
+.brand small {
+  color:var(--muted);
+  letter-spacing:2px;
+  font-size:9px;
+}
+nav {
+  display:grid;
+  gap:7px;
+  margin-top:25px;
+}
+.navbtn {
+  width:100%;
+  text-align:left;
+  padding:13px 15px;
+  color:#b5d3dc;
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:8px;
+}
+.navbtn.active,
+.navbtn:hover {
+  background:#10343d;
+  color:var(--cyan);
+  border-color:#286a72;
+}
+.navbtn span { margin-right:10px; }
+.sidebar-foot {
+  margin-top:40px;
+  text-align:center;
+  color:#608894;
+  font-size:10px;
+  letter-spacing:2px;
+}
+main { min-width:0; }
+.hero {
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid #277079;
+  background:#06131c;
+  line-height:0;
+}
+.hero-banner {
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+.content { padding:25px; }
+.topline {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+h3 {
+  margin:0;
+  color:var(--cyan);
+  letter-spacing:3px;
+  font-size:14px;
+}
+.status {
+  font-size:12px;
+  color:var(--muted);
+}
+.status b { color:var(--cyan); }
+.layout {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 245px;
+  gap:20px;
+}
+.modules {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.tile {
+  min-height:135px;
+  text-align:left;
+  padding:19px;
+  border:1px solid #27606a;
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 100% 0%,
+      #12515b66,transparent 65%),
+    linear-gradient(135deg,#102b36,#07171f);
+  color:var(--text);
+  transition:background .2s,border-color .2s;
+}
+.tile:hover {
+  border-color:var(--cyan);
+  background:#12343e;
+}
+.tile .symbol {
+  color:var(--cyan);
+  font-size:27px;
+  margin-bottom:12px;
+}
+.tile strong {
+  display:block;
+  font-size:15px;
+  letter-spacing:.5px;
+}
+.tile small {
+  display:block;
+  color:var(--muted);
+  margin-top:7px;
+  line-height:1.5;
+}
+.tile em {
+  display:block;
+  color:#55aeb4;
+  font-size:10px;
+  font-style:normal;
+  margin-top:12px;
+  letter-spacing:1px;
+}
+.panel {
+  background:linear-gradient(150deg,#102b35,#071820);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:19px;
+}
+.sidepanels {
+  display:grid;
+  gap:14px;
+  align-content:start;
+}
+.panel h4 {
+  color:var(--cyan);
+  font-size:12px;
+  letter-spacing:2px;
+  margin:0 0 15px;
+}
+.date-large {
+  font-size:32px;
+  font-weight:bold;
+}
+.date-sub {
+  color:var(--muted);
+  font-size:13px;
+  margin-top:7px;
+}
+.panel p {
+  color:#b6d2d8;
+  font-size:13px;
+  line-height:1.7;
+}
+.mini-label {
+  color:#779eaa;
+  font-size:10px;
+  letter-spacing:2px;
+}
+.focus {
+  margin-top:18px;
+  min-height:110px;
+}
+.focus p { margin-bottom:0; }
+.view { display:none; }
+.view.active { display:block; }
+.placeholder {
+  max-width:650px;
+  margin:20px auto;
+  text-align:center;
+  padding:45px 25px;
+}
+.placeholder .big {
+  font-size:45px;
+  color:var(--cyan);
+}
+.placeholder h2 {
+  color:var(--cyan);
+  letter-spacing:2px;
+}
+.back {
+  margin-top:20px;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  background:transparent;
+  border-radius:8px;
+  padding:11px 20px;
+}
+footer {
+  padding:20px 25px;
+  color:#5e8b97;
+  font-size:10px;
+  letter-spacing:2px;
+  text-align:center;
+}
+@media(max-width:1000px) {
+  .layout { grid-template-columns:1fr; }
+  .sidepanels {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:700px) {
+  .app { grid-template-columns:1fr; }
+  .sidebar { padding:10px; }
+  .brand {
+    padding:5px;
+    border:0;
+  }
+  .brand img {
+    width:52px;
+    margin-bottom:4px;
+  }
+  .brand h2 {
+    font-size:13px;
+    margin:0;
+  }
+  .brand small,.sidebar-foot { display:none; }
+  nav {
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+    margin:8px 0 0;
+  }
+  .navbtn {
+    width:auto;
+    flex-shrink:0;
+    font-size:12px;
+    padding:10px;
+  }
+  .content { padding:15px; }
+  .modules { gap:10px; }
+  .tile {
+    padding:14px;
+    min-height:135px;
+  }
+  .sidepanels { grid-template-columns:1fr; }
+}
+@media(max-width:390px) {
+  .modules { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  * { transition:none!important; }
+}
+
+/* WOLF HQ v0.3: compact landscape dashboard, preserving v0.2 navigation */
+@media (min-width:701px) {
+  .app { min-height:100dvh; grid-template-columns:clamp(165px,18vw,210px) minmax(0,1fr); }
+  .sidebar { padding:12px 12px; }
+  .brand { padding:4px 0 13px; }
+  .brand img { width:clamp(62px,8vh,90px); margin-bottom:5px; }
+  .brand h2 { font-size:20px; margin:5px 0 4px; }
+  .brand small { font-size:8px; letter-spacing:1px; }
+  nav { margin-top:12px; gap:3px; }
+  .navbtn { padding:clamp(6px,1vh,10px) 10px; font-size:13px; }
+  .sidebar-foot { margin-top:14px; }
+  main { display:flex; flex-direction:column; min-height:100dvh; }
+  #home.active { flex:1; }
+  #home .content { padding:clamp(12px,2vh,20px); }
+  .topline { margin-bottom:12px; }
+  .layout { grid-template-columns:minmax(0,1fr) minmax(175px,24%); gap:12px; }
+  .modules { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .tile { min-height:0; padding:clamp(9px,1.5vh,15px); border-radius:9px; }
+  .tile .symbol { font-size:21px; margin-bottom:5px; }
+  .tile strong { font-size:14px; }
+  .tile small { margin-top:4px; font-size:11px; line-height:1.25; }
+  .tile em { margin-top:5px; font-size:9px; }
+  .panel { padding:12px; border-radius:9px; }
+  .panel h4 { margin-bottom:8px; font-size:11px; }
+  .panel p { font-size:11px; line-height:1.4; margin:5px 0; }
+  .sidepanels { grid-template-columns:1fr; gap:10px; }
+  .date-large { font-size:25px; }
+  .date-sub { font-size:11px; }
+  .focus { min-height:0; margin-top:10px; }
+  footer { padding:8px; font-size:9px; }
+}
+/* Compact heights: ensure useful controls remain visible in Safari landscape */
+@media (min-width:701px) and (max-height:750px) {
+  .brand img { width:56px; }
+  .brand h2 { font-size:17px; }
+  .brand { padding-bottom:8px; }
+  .navbtn { padding:5px 9px; font-size:12px; }
+  nav { gap:1px; margin-top:7px; }
+  .sidebar-foot { display:none; }
+  #home .content { padding:10px 14px; }
+  .topline { margin-bottom:8px; }
+  .modules { gap:7px; }
+  .tile { padding:8px 10px; }
+  .tile .symbol { font-size:17px; margin-bottom:3px; }
+  .tile strong { font-size:12px; }
+  .tile small { font-size:10px; }
+  .tile em { font-size:8px; margin-top:3px; }
+  .panel { padding:9px; }
+  .panel p { font-size:10px; }
+  .sidepanels { gap:7px; }
+  .focus { margin-top:7px; }
+  footer { display:none; }
+}
+
+/* WOLF HQ v0.4 — cinematic single-screen landscape home */
+.sidebar-mark {color:var(--cyan);font-weight:bold;letter-spacing:4px;text-align:center;font-size:22px;padding:10px 0 14px;opacity:.8}
+.command-header {display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;isolation:isolate;overflow:hidden;min-height:150px;padding:8px 12px 12px;border-bottom:1px solid #16727b;background:radial-gradient(ellipse at 50% 120%,#08627355,transparent 70%),linear-gradient(180deg,#071720,#081f29 85%,#06131c);}
+.command-header::before,.command-header::after {content:"";position:absolute;top:60%;width:24%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan));box-shadow:0 0 12px var(--cyan);opacity:.7;z-index:-1}
+.command-header::before {left:3%}.command-header::after {right:3%;transform:rotate(180deg)}
+.command-header img {height:64px;width:64px;object-fit:contain;filter:drop-shadow(0 0 12px #00f0e8aa)}
+.command-name {font-size:clamp(26px,4.5vw,54px);font-weight:800;letter-spacing:.17em;line-height:1.04;text-shadow:0 0 18px #00f0e880;color:#e6faff}
+.command-subtitle {color:var(--cyan);font-size:clamp(9px,1.1vw,14px);letter-spacing:.36em;margin-top:4px;text-align:center}
+@media(min-width:701px){
+ .app {grid-template-columns:clamp(140px,15vw,190px) minmax(0,1fr)}
+ .sidebar {padding:12px 9px;background:linear-gradient(160deg,#06121b,#08232c)}
+ nav {margin-top:7px;gap:5px}.navbtn {padding:clamp(8px,1.5vh,13px) 10px}
+ .command-header {min-height:clamp(115px,21vh,185px);height:clamp(115px,21vh,185px)}
+ #home .content {padding:clamp(9px,1.5vh,16px)}
+ .layout {grid-template-columns:minmax(0,1fr) minmax(180px,23%);gap:12px}
+ .modules {grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+ .tile {min-height:clamp(100px,15vh,142px);padding:12px;border-radius:4px;border-color:#287a84;box-shadow:inset 0 0 17px #00f0e810,0 0 9px #00f0e811;background:radial-gradient(circle at 95% 10%,#0a728044,transparent 70%),linear-gradient(135deg,#102e3c,#061720)}
+ .tile .symbol {font-size:26px;text-shadow:0 0 12px #00f0e8aa;margin-bottom:7px}
+ .tile strong {font-size:14px}.tile small {font-size:11px}
+ .modules>.panel {grid-column:span 2;min-height:0}
+ .panel {border-color:#286874;box-shadow:inset 0 0 18px #00f0e80a;background:linear-gradient(140deg,#0e303b,#071820)}
+ .focus {display:none}
+ .sidepanels {gap:10px}
+ .sidepanels>.panel {min-height:0}
+ footer {display:none}
+}
+@media(min-width:701px) and (max-height:760px){
+ .command-header {height:110px;min-height:110px;padding:3px 8px}
+ .command-header img {height:43px;width:43px}
+ .command-name {font-size:31px}
+ .command-subtitle {font-size:9px}
+ .tile {min-height:94px;padding:8px 10px}
+ .tile .symbol {font-size:19px;margin-bottom:4px}
+ .tile strong {font-size:12px}.tile small {font-size:10px}.tile em {font-size:8px;margin-top:4px}
+ .modules {gap:7px}.layout {gap:8px}.sidepanels {gap:7px}
+ .panel {padding:9px}.panel h4 {margin-bottom:7px}
+ .navbtn {padding:6px 8px}
+}
+@media(max-width:700px){
+ .sidebar-mark {display:none}
+ .command-header {min-height:110px;padding:10px}
+ .command-header img {height:44px;width:44px}
+ .command-name {font-size:29px}
+ .command-subtitle {font-size:9px;letter-spacing:.17em}
+}
+
+/* v0.5 — Header refinement only. Other dashboard sections unchanged. */
+.command-header {padding:10px 20px;min-height:120px;height:120px;}
+.command-header::before,.command-header::after {top:50%;width:13%;opacity:.45;}
+.command-identity {display:flex;align-items:center;justify-content:center;gap:22px;max-width:100%;}
+.command-header .command-identity img {width:94px;height:94px;flex:none;object-fit:contain;filter:drop-shadow(0 0 18px #00f0e8aa);}
+.command-wordmark {display:flex;flex-direction:column;align-items:flex-start;min-width:0;}
+.command-name {font-size:clamp(32px,4.3vw,62px);letter-spacing:.13em;white-space:nowrap;}
+.command-subtitle {font-size:clamp(9px,1.12vw,14px);letter-spacing:.23em;text-align:left;white-space:nowrap;margin-top:5px;}
+.command-motto {font-size:10px;letter-spacing:.24em;color:#8fbac4;margin-top:8px;white-space:nowrap;}
+@media(min-width:701px) and (max-height:760px){
+ .command-header {height:105px;min-height:105px;padding:6px 16px;}
+ .command-header .command-identity img {width:77px;height:77px;}
+ .command-name {font-size:clamp(30px,3.8vw,48px);}
+ .command-subtitle {font-size:10px;}
+ .command-motto {font-size:9px;margin-top:5px;}
+}
+@media(max-width:700px){
+ .command-header {height:auto;min-height:98px;padding:12px 8px;}
+ .command-identity {gap:10px;}
+ .command-header .command-identity img {width:55px;height:55px;}
+ .command-name {font-size:clamp(23px,6vw,34px);letter-spacing:.09em;}
+ .command-subtitle {font-size:8px;letter-spacing:.09em;white-space:normal;}
+ .command-motto {font-size:8px;letter-spacing:.08em;white-space:normal;}
+ .command-header::before,.command-header::after {display:none;}
+}
+
+/* v0.6 — reversible atmospheric header and backdrop refinement */
+#home { position:relative; isolation:isolate; min-height:100%; overflow:hidden; }
+#home::before {
+  content:""; position:absolute; pointer-events:none; z-index:-1;
+  left:0; right:0; bottom:0; height:38%; opacity:.42;
+  background:linear-gradient(180deg,transparent 0%,#07303b22 65%,#00f0e812 100%);
+}
+#home::after {
+  content:""; position:absolute; pointer-events:none; z-index:-1;
+  left:0; right:0; bottom:0; height:31%; opacity:.42;
+  background:linear-gradient(0deg,#00cdd51c,transparent 75%);
+  clip-path:polygon(0 86%,7% 71%,13% 82%,21% 49%,30% 83%,39% 61%,48% 89%,58% 40%,66% 75%,74% 53%,82% 84%,91% 47%,100% 80%,100% 100%,0 100%);
+  border-bottom:1px solid #00f0e844;
+}
+#home .content { position:relative; z-index:1; }
+.command-header { isolation:isolate; background:radial-gradient(ellipse at 50% 125%,#08778a4d,transparent 68%),linear-gradient(180deg,#06141e,#0a2630 86%,#06131c); }
+.command-header::before,.command-header::after {width:12%;opacity:.35;}
+.command-identity { width:100%; position:relative; justify-content:center; }
+.command-header .command-identity img {
+  position:absolute; left:clamp(12px,3.8vw,62px); top:50%;
+  transform:translateY(-50%); width:110px; height:110px;
+  filter:drop-shadow(0 0 14px #00f0e8cc);
+}
+.command-wordmark { align-items:center; text-align:center; }
+.command-name {
+  color:#d6e7f1;
+  background:linear-gradient(180deg,#ffffff 0%,#d6f4ff 22%,#77909e 47%,#f8ffff 54%,#9ab2c1 77%,#e4f5ff 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:none;
+  filter:drop-shadow(0 2px 1px #000a) drop-shadow(0 0 10px #00f0e83a);
+}
+.command-subtitle { text-align:center; }
+@media(min-width:701px) and (max-height:760px) {
+  .command-header .command-identity img { width:100px; height:100px; left:clamp(8px,2vw,30px); }
+}
+@media(min-width:701px) and (max-width:1000px) {
+  .command-header .command-identity img {width:75px;height:75px;left:6px;}
+  .command-name {font-size:clamp(26px,3.6vw,42px);}
+}
+@media(max-width:700px) {
+  .command-identity {justify-content:flex-end;padding-left:60px;}
+  .command-header .command-identity img {left:0;width:56px;height:56px;}
+  .command-wordmark {align-items:center;}
+  .command-name {font-size:clamp(22px,6vw,34px);}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="sidebar-mark" aria-hidden="true">///</div>
+
+  <nav aria-label="Main navigation">
+    <button class="navbtn active" data-page="home">
+      <span>⌂</span>Dashboard
+    </button>
+    <button class="navbtn" data-page="journal">
+      <span>▤</span>Journal
+    </button>
+    <button class="navbtn" data-page="planner">
+      <span>▦</span>Planner
+    </button>
+    <button class="navbtn" data-page="appointments">
+      <span>◷</span>Appointments
+    </button>
+    <button class="navbtn" data-page="finances">
+      <span>◈</span>Finances
+    </button>
+    <button class="navbtn" data-page="habits">
+      <span>◎</span>Habits
+    </button>
+    <button class="navbtn" data-page="goals">
+      <span>△</span>Goals
+    </button>
+    <button class="navbtn" data-page="wishlist">
+      <span>☆</span>Wishlist
+    </button>
+    <button class="navbtn" data-page="settings">
+      <span>⚙</span>Settings
+    </button>
+  </nav>
+  <div class="sidebar-foot">SYSTEM v0.6 LAYOUT</div>
+</aside>
+
+<main>
+  <div id="home" class="view active">
+    <header class="command-header">
+      <div class="command-identity">
+        <img src="wolf-logo.png" alt="WOLF HQ geometric wolf emblem">
+        <div class="command-wordmark">
+          <div class="command-name">WOLF HQ</div>
+          <div class="command-subtitle">PERSONAL COMMAND CENTER</div>
+          <div class="command-motto">YOUR LIFE. YOUR COMMAND.</div>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="topline">
+        <h3>DAILY OPERATIONS</h3>
+        <div class="status">
+          <b>●</b> COMMAND CENTER ONLINE
+        </div>
+      </div>
+
+      <div class="layout">
+        <div>
+          <div class="modules">
+            <button class="tile" data-page="journal">
+              <div class="symbol">▤</div>
+              <strong>Bullet Journal</strong>
+              <small>Notes • Logs • Reflections</small>
+              <em>INTEGRATION PLANNED</em>
+            </button>
+            <button class="tile" data-page="planner">
+              <div class="symbol">▦</div>
+              <strong>Daily Planner</strong>
+              <small>Schedule • Tasks • Focus</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="appointments">
+              <div class="symbol">◷</div>
+              <strong>Appointments</strong>
+              <small>Calendar • Events • Reminders</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="finances">
+              <div class="symbol">◈</div>
+              <strong>Personal Finances</strong>
+              <small>Budget • Spending • Overview</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="habits">
+              <div class="symbol">◎</div>
+              <strong>Habits</strong>
+              <small>Routines • Consistency • Progress</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="goals">
+              <div class="symbol">△</div>
+              <strong>Goals</strong>
+              <small>Milestones • Long-Term Plans</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="wishlist">
+              <div class="symbol">☆</div>
+              <strong>Wishlist</strong>
+              <small>Needs • Wants • Ideas</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <div class="panel">
+              <h4>TODAY'S FOCUS</h4>
+              <p>Future home for daily priorities and
+                important activities.</p>
+              <div class="mini-label">
+                AWAITING MODULE DESIGN
+              </div>
+            </div>
+          </div>
+
+          <div class="panel focus">
+            <h4>COMMAND CENTER STATUS</h4>
+            <p>
+              WOLF HQ dashboard foundation initialized.
+              Modules will be developed and tested
+              individually. Existing applications remain
+              independent.
+            </p>
+          </div>
+        </div>
+
+        <div class="sidepanels">
+          <div class="panel">
+            <h4>DATE & TIME</h4>
+            <div class="date-large" id="clock">--:--</div>
+            <div class="date-sub" id="date">Loading...</div>
+          </div>
+          <div class="panel">
+            <h4>SYSTEM STATUS</h4>
+            <p>
+              Dashboard: <b>Prototype</b><br>
+              Journal: Separate application<br>
+              Other modules: Planned
+            </p>
+          </div>
+          <div class="panel">
+            <h4>DEVELOPMENT</h4>
+            <p>
+              Version 0.6<br>
+              Cinematic artwork<br>
+              iPad-first design
+            </p>
+            <div class="mini-label">
+              LOCAL BROWSER INTERFACE
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="module-view" class="view">
+    <div class="content">
+      <div class="panel placeholder">
+        <div class="big">◇</div>
+        <h2 id="module-title">MODULE</h2>
+        <p id="module-description">
+          This module has not been implemented yet.
+        </p>
+        <button class="back" data-page="home">
+          Return to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.6
+  </footer>
+</main>
+</div>
+
+<script>
+const modules = {
+  journal: {
+    title:"BULLET JOURNAL",
+    description:"Your existing Bullet Journal remains " +
+      "safe in its separate application. Integration " +
+      "will be planned and tested later."
+  },
+  planner: {
+    title:"DAILY PLANNER",
+    description:"Future daily and weekly planning module."
+  },
+  appointments: {
+    title:"APPOINTMENTS",
+    description:"Future calendar and appointment management."
+  },
+  finances: {
+    title:"PERSONAL FINANCES",
+    description:"Future financial overview. No financial " +
+      "information is stored in this prototype."
+  },
+  habits: {
+    title:"HABITS",
+    description:"Future routines and habit tracking."
+  },
+  goals: {
+    title:"GOALS",
+    description:"Future personal goals and milestones."
+  },
+  wishlist: {
+    title:"WISHLIST",
+    description:"Future needs, wants and ideas."
+  },
+  settings: {
+    title:"SETTINGS",
+    description:"Future application preferences and controls."
+  }
+};
+
+function showPage(page) {
+  const home = page === "home";
+  document.getElementById("home")
+    .classList.toggle("active",home);
+  document.getElementById("module-view")
+    .classList.toggle("active",!home);
+
+  document.querySelectorAll(".navbtn").forEach(btn => {
+    const selected = btn.dataset.page === page;
+    btn.classList.toggle("active",selected);
+    if(selected) {
+      btn.setAttribute("aria-current","page");
+    } else {
+      btn.removeAttribute("aria-current");
+    }
+  });
+
+  if(!home && modules[page]) {
+    document.getElementById("module-title")
+      .textContent = modules[page].title;
+    document.getElementById("module-description")
+      .textContent = modules[page].description;
+  }
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll("[data-page]").forEach(btn => {
+  btn.addEventListener("click",() => {
+    showPage(btn.dataset.page);
+  });
+});
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString([],{
+      hour:"numeric",minute:"2-digit"
+    });
+  document.getElementById("date").textContent =
+    now.toLocaleDateString([],{
+      weekday:"long",month:"long",
+      day:"numeric",year:"numeric"
+    });
+}
+updateClock();
+setInterval(updateClock,30000);
+</script>
+</body>
+</html>
