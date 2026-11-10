@@ -42,10 +42,13 @@ button:focus-visible {
   padding:12px 0 28px;
   border-bottom:1px solid var(--line);
 }
-.brand svg {
-  width:95px;
-  height:105px;
-  filter:drop-shadow(0 0 14px #00f0e855);
+.brand img {
+  display:block;
+  width:125px;
+  max-width:100%;
+  height:auto;
+  margin:0 auto 12px;
+  filter:drop-shadow(0 0 12px #00f0e844);
 }
 .brand h2 {
   color:var(--cyan);
@@ -87,51 +90,17 @@ nav {
 }
 main { min-width:0; }
 .hero {
-  min-height:245px;
   position:relative;
   overflow:hidden;
   border-bottom:1px solid #277079;
-  background:
-    radial-gradient(ellipse at 78% 35%,
-      #165d69 0%,transparent 46%),
-    linear-gradient(135deg,#0c2933,#030c13);
+  background:#06131c;
+  line-height:0;
 }
-.hero-art {
-  position:absolute;
-  inset:0;
+.hero-banner {
+  display:block;
   width:100%;
-  height:100%;
-  opacity:.85;
-}
-.hero-content {
-  position:relative;
-  z-index:1;
-  padding:48px 35px;
-  text-shadow:0 2px 15px #000;
-}
-.eyebrow {
-  color:var(--cyan);
-  letter-spacing:4px;
-  font-size:11px;
-}
-.hero h1 {
-  font-size:clamp(38px,6vw,76px);
-  letter-spacing:8px;
-  margin:10px 0;
-  line-height:1;
-}
-.hero p {
-  color:#c2e7e9;
-  font-size:14px;
-  letter-spacing:2px;
-}
-.hero-wolf {
-  position:absolute;
-  right:13%;
-  top:35px;
-  width:150px;
-  opacity:.45;
-  filter:drop-shadow(0 0 20px #00f0e8);
+  height:auto;
+  object-fit:contain;
 }
 .content { padding:25px; }
 .topline {
@@ -210,7 +179,11 @@ h3 {
   border-radius:12px;
   padding:19px;
 }
-.sidepanels { display:grid; gap:14px; align-content:start; }
+.sidepanels {
+  display:grid;
+  gap:14px;
+  align-content:start;
+}
 .panel h4 {
   color:var(--cyan);
   font-size:12px;
@@ -274,14 +247,25 @@ footer {
 }
 @media(max-width:1000px) {
   .layout { grid-template-columns:1fr; }
-  .sidepanels { grid-template-columns:repeat(3,1fr); }
+  .sidepanels {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
 }
 @media(max-width:700px) {
   .app { grid-template-columns:1fr; }
   .sidebar { padding:10px; }
-  .brand { padding:5px; border:0; }
-  .brand svg { width:40px; height:45px; }
-  .brand h2 { font-size:13px; margin:0; }
+  .brand {
+    padding:5px;
+    border:0;
+  }
+  .brand img {
+    width:52px;
+    margin-bottom:4px;
+  }
+  .brand h2 {
+    font-size:13px;
+    margin:0;
+  }
   .brand small,.sidebar-foot { display:none; }
   nav {
     display:flex;
@@ -295,12 +279,12 @@ footer {
     font-size:12px;
     padding:10px;
   }
-  .hero { min-height:190px; }
-  .hero-content { padding:40px 20px; }
-  .hero-wolf { right:5%; width:100px; }
   .content { padding:15px; }
   .modules { gap:10px; }
-  .tile { padding:14px; min-height:135px; }
+  .tile {
+    padding:14px;
+    min-height:135px;
+  }
   .sidepanels { grid-template-columns:1fr; }
 }
 @media(max-width:390px) {
@@ -315,23 +299,8 @@ footer {
 <div class="app">
 <aside class="sidebar">
   <div class="brand">
-    <svg viewBox="0 0 120 130" fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Geometric wolf emblem">
-      <path d="M12 9 L44 28 L60 19 L76 28 L108 9
-        L99 65 L86 101 L60 123 L34 101 L21 65 Z"
-        stroke="#00f0e8" stroke-width="3"/>
-      <path d="M24 29 L45 43 L60 37 L75 43 L96 29
-        L86 72 L73 88 L60 113 L47 88 L34 72 Z"
-        fill="#0c3942" stroke="#51ffff" stroke-width="2"/>
-      <path d="M35 60 L53 68 L43 74 Z
-        M85 60 L67 68 L77 74 Z"
-        fill="#00f0e8"/>
-      <path d="M53 85 L60 78 L67 85 L60 92 Z"
-        fill="#bfffff"/>
-      <path d="M43 89 L60 104 L77 89"
-        stroke="#00f0e8" stroke-width="2"/>
-    </svg>
+    <img src="wolf-logo.png"
+      alt="WOLF HQ geometric wolf emblem">
     <h2>WOLF HQ</h2>
     <small>PERSONAL OPERATIONS</small>
   </div>
@@ -365,60 +334,16 @@ footer {
       <span>⚙</span>Settings
     </button>
   </nav>
-  <div class="sidebar-foot">SYSTEM v0.1</div>
+  <div class="sidebar-foot">SYSTEM v0.2</div>
 </aside>
 
 <main>
   <header class="hero">
-    <svg class="hero-art" viewBox="0 0 1100 300"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden="true">
-      <circle cx="850" cy="95" r="70"
-        fill="#73f7ed" opacity=".20"/>
-      <circle cx="850" cy="95" r="57"
-        fill="#8dece9" opacity=".10"/>
-      <path d="M0 230 L150 120 L250 205 L390 75
-        L560 210 L710 100 L880 220 L1000 125
-        L1100 220 V300 H0Z"
-        fill="#164a57"/>
-      <path d="M0 260 L190 170 L320 250 L490 130
-        L650 245 L810 155 L970 240 L1100 170
-        V300 H0Z" fill="#0a303c"/>
-      <path d="M0 290 L100 230 L250 280 L390 220
-        L530 285 L710 220 L890 280 L1040 215
-        L1100 260 V300 H0Z"
-        fill="#061b26"/>
-      <g stroke="#0d3d43" stroke-width="4">
-        <path d="M55 300V240 M35 265L55 235L75 265
-          M30 280L55 250L80 280"/>
-        <path d="M950 300V225 M920 260L950 220L980 260
-          M915 280L950 240L985 280"/>
-        <path d="M1030 300V235
-          M1005 265L1030 230L1055 265
-          M1000 285L1030 250L1060 285"/>
-      </g>
-    </svg>
-
-    <svg class="hero-wolf" viewBox="0 0 120 130"
-      fill="none" aria-hidden="true">
-      <path d="M12 9L44 28L60 19L76 28L108 9
-        L99 65L86 101L60 123L34 101L21 65Z"
-        stroke="#00f0e8" stroke-width="3"/>
-      <path d="M24 29L45 43L60 37L75 43L96 29
-        L86 72L73 88L60 113L47 88L34 72Z"
-        fill="#0c3942" stroke="#51ffff"
-        stroke-width="2"/>
-      <path d="M35 60L53 68L43 74Z
-        M85 60L67 68L77 74Z" fill="#00f0e8"/>
-      <path d="M53 85L60 78L67 85L60 92Z"
-        fill="#bfffff"/>
-    </svg>
-
-    <div class="hero-content">
-      <div class="eyebrow">PERSONAL OPERATIONS SYSTEM</div>
-      <h1>WOLF HQ</h1>
-      <p>Your life. Your command.</p>
-    </div>
+    <img class="hero-banner"
+      src="wolf-hq-banner.png"
+      alt="WOLF HQ personal operations system,
+      featuring a luminous wolf emblem,
+      moonlit mountains and cyan night sky">
   </header>
 
   <div id="home" class="view active">
@@ -479,7 +404,9 @@ footer {
               <h4>TODAY'S FOCUS</h4>
               <p>Future home for daily priorities and
                 important activities.</p>
-              <div class="mini-label">AWAITING MODULE DESIGN</div>
+              <div class="mini-label">
+                AWAITING MODULE DESIGN
+              </div>
             </div>
           </div>
 
@@ -511,11 +438,13 @@ footer {
           <div class="panel">
             <h4>DEVELOPMENT</h4>
             <p>
-              Version 0.1<br>
-              Visual foundation<br>
+              Version 0.2<br>
+              Cinematic artwork<br>
               iPad-first design
             </p>
-            <div class="mini-label">LOCAL BROWSER INTERFACE</div>
+            <div class="mini-label">
+              LOCAL BROWSER INTERFACE
+            </div>
           </div>
         </div>
       </div>
@@ -538,7 +467,7 @@ footer {
   </div>
 
   <footer>
-    WOLF HQ • PERSONAL OPERATIONS SYSTEM • PROTOTYPE 0.1
+    WOLF HQ • PERSONAL OPERATIONS SYSTEM • PROTOTYPE 0.2
   </footer>
 </main>
 </div>
