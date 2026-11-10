@@ -510,6 +510,20 @@ footer {
 @media(min-width:701px) and (max-height:760px){.command-name {font-size:clamp(37px,4.25vw,57px);}}
 @media(max-width:700px){.command-name {font-size:clamp(29px,7vw,43px);}}
 
+
+/* v0.9 — approved cinematic header artwork. Sidebar and modules unchanged. */
+.command-header.command-header-art {
+  display:block;
+  height:clamp(105px,9.2vw,136px);
+  min-height:0;
+  padding:0;
+  background:#06131c url("wolf-hq-header-v0.9.webp") center center / 100% 100% no-repeat;
+  border-bottom:1px solid #168d99;
+}
+.command-header-art::before,.command-header-art::after {display:none!important;}
+@media(max-width:700px){
+ .command-header.command-header-art {height:90px;background-size:cover;}
+}
 </style>
 </head>
 <body>
@@ -546,36 +560,12 @@ footer {
       <span>⚙</span>Settings
     </button>
   </nav>
-  <div class="sidebar-foot">SYSTEM v0.8 LAYOUT</div>
+  <div class="sidebar-foot">SYSTEM v0.9 LAYOUT</div>
 </aside>
 
 <main>
   <div id="home" class="view active">
-    <header class="command-header">
-      <svg class="header-landscape" viewBox="0 0 1200 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="v8sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#06121d"/><stop offset=".65" stop-color="#0b2b39"/><stop offset="1" stop-color="#071820"/></linearGradient>
-          <linearGradient id="v8far" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0d3847" stop-opacity=".72"/><stop offset="1" stop-color="#061923" stop-opacity=".3"/></linearGradient>
-          <linearGradient id="v8near" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0a2938" stop-opacity=".7"/><stop offset="1" stop-color="#06131c"/></linearGradient>
-          <radialGradient id="v8glow"><stop stop-color="#00cbd3" stop-opacity=".14"/><stop offset="1" stop-color="#00cbd3" stop-opacity="0"/></radialGradient>
-        </defs>
-        <rect width="1200" height="160" fill="url(#v8sky)"/>
-        <ellipse cx="600" cy="83" rx="350" ry="95" fill="url(#v8glow)"/>
-        <path d="M0 125 Q30 113 52 104 L89 86 110 93 138 70 163 82 189 63 218 79 244 54 264 66 292 40 316 57 343 48 372 78 402 70 439 101 470 92 506 116 540 103 578 126 625 112 668 122 706 98 737 107 768 82 795 90 829 59 853 73 887 47 915 62 946 32 973 52 1002 43 1030 71 1059 61 1088 86 1117 72 1153 98 1200 112 L1200 160 0 160Z" fill="url(#v8far)"/>
-        <path d="M0 125 Q30 113 52 104 L89 86 110 93 138 70 163 82 189 63 218 79 244 54 264 66 292 40 316 57 343 48 372 78 402 70 M768 82 795 90 829 59 853 73 887 47 915 62 946 32 973 52 1002 43 1030 71 1059 61 1088 86 1117 72 1153 98 1200 112" fill="none" stroke="#13d8e6" stroke-width="1.35" opacity=".56"/>
-        <path d="M0 145 Q62 127 112 138 L158 112 189 125 239 91 271 113 310 101 349 131 390 114 430 137 490 125 551 148 616 130 674 145 721 120 769 134 816 107 854 124 897 95 929 112 975 89 1015 113 1056 96 1108 125 1150 114 1200 138 L1200 160 0 160Z" fill="url(#v8near)"/>
-        <path d="M0 145 Q62 127 112 138 L158 112 189 125 239 91 271 113 310 101 349 131 M816 107 854 124 897 95 929 112 975 89 1015 113 1056 96 1108 125 1150 114 1200 138" fill="none" stroke="#0b91a5" stroke-width=".8" opacity=".36"/>
-        <path d="M0 151 Q180 143 350 149 T700 149 T1200 150" stroke="#00dbe7" stroke-width="1" opacity=".13" fill="none"/>
-      </svg>
-
-      <div class="command-identity">
-        <div class="command-wordmark">
-          <div class="command-name">WOLF HQ</div>
-          <div class="command-subtitle">PERSONAL COMMAND CENTER</div>
-          <div class="command-motto">YOUR LIFE. YOUR COMMAND.</div>
-        </div>
-      </div>
-    </header>
+    <header class="command-header command-header-art" role="img" aria-label="WOLF HQ — Personal Command Center. Your life. Your command. Cinematic cyan alpine panorama and metallic wordmark."></header>
     <div class="content">
       <div class="topline">
         <h3>DAILY OPERATIONS</h3>
@@ -667,7 +657,7 @@ footer {
           <div class="panel">
             <h4>DEVELOPMENT</h4>
             <p>
-              Version 0.8<br>
+              Version 0.9<br>
               Cinematic artwork<br>
               iPad-first design
             </p>
@@ -696,7 +686,7 @@ footer {
   </div>
 
   <footer>
-    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.8
+    WOLF HQ • PERSONAL COMMAND CENTER • DASHBOARD PREVIEW v0.9
   </footer>
 </main>
 </div>
