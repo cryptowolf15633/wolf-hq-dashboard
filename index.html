@@ -293,6 +293,60 @@ footer {
 @media(prefers-reduced-motion:reduce) {
   * { transition:none!important; }
 }
+
+/* WOLF HQ v0.3: compact landscape dashboard, preserving v0.2 navigation */
+@media (min-width:701px) {
+  .app { min-height:100dvh; grid-template-columns:clamp(165px,18vw,210px) minmax(0,1fr); }
+  .sidebar { padding:12px 12px; }
+  .brand { padding:4px 0 13px; }
+  .brand img { width:clamp(62px,8vh,90px); margin-bottom:5px; }
+  .brand h2 { font-size:20px; margin:5px 0 4px; }
+  .brand small { font-size:8px; letter-spacing:1px; }
+  nav { margin-top:12px; gap:3px; }
+  .navbtn { padding:clamp(6px,1vh,10px) 10px; font-size:13px; }
+  .sidebar-foot { margin-top:14px; }
+  main { display:flex; flex-direction:column; min-height:100dvh; }
+  #home.active { flex:1; }
+  #home .content { padding:clamp(12px,2vh,20px); }
+  .topline { margin-bottom:12px; }
+  .layout { grid-template-columns:minmax(0,1fr) minmax(175px,24%); gap:12px; }
+  .modules { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .tile { min-height:0; padding:clamp(9px,1.5vh,15px); border-radius:9px; }
+  .tile .symbol { font-size:21px; margin-bottom:5px; }
+  .tile strong { font-size:14px; }
+  .tile small { margin-top:4px; font-size:11px; line-height:1.25; }
+  .tile em { margin-top:5px; font-size:9px; }
+  .panel { padding:12px; border-radius:9px; }
+  .panel h4 { margin-bottom:8px; font-size:11px; }
+  .panel p { font-size:11px; line-height:1.4; margin:5px 0; }
+  .sidepanels { grid-template-columns:1fr; gap:10px; }
+  .date-large { font-size:25px; }
+  .date-sub { font-size:11px; }
+  .focus { min-height:0; margin-top:10px; }
+  footer { padding:8px; font-size:9px; }
+}
+/* Compact heights: ensure useful controls remain visible in Safari landscape */
+@media (min-width:701px) and (max-height:750px) {
+  .brand img { width:56px; }
+  .brand h2 { font-size:17px; }
+  .brand { padding-bottom:8px; }
+  .navbtn { padding:5px 9px; font-size:12px; }
+  nav { gap:1px; margin-top:7px; }
+  .sidebar-foot { display:none; }
+  #home .content { padding:10px 14px; }
+  .topline { margin-bottom:8px; }
+  .modules { gap:7px; }
+  .tile { padding:8px 10px; }
+  .tile .symbol { font-size:17px; margin-bottom:3px; }
+  .tile strong { font-size:12px; }
+  .tile small { font-size:10px; }
+  .tile em { font-size:8px; margin-top:3px; }
+  .panel { padding:9px; }
+  .panel p { font-size:10px; }
+  .sidepanels { gap:7px; }
+  .focus { margin-top:7px; }
+  footer { display:none; }
+}
 </style>
 </head>
 <body>
@@ -302,7 +356,7 @@ footer {
     <img src="wolf-logo.png"
       alt="WOLF HQ geometric wolf emblem">
     <h2>WOLF HQ</h2>
-    <small>PERSONAL OPERATIONS</small>
+    <small>PERSONAL COMMAND CENTER</small>
   </div>
 
   <nav aria-label="Main navigation">
@@ -334,18 +388,10 @@ footer {
       <span>⚙</span>Settings
     </button>
   </nav>
-  <div class="sidebar-foot">SYSTEM v0.2</div>
+  <div class="sidebar-foot">SYSTEM v0.3 LAYOUT</div>
 </aside>
 
 <main>
-  <header class="hero">
-    <img class="hero-banner"
-      src="wolf-hq-banner.png"
-      alt="WOLF HQ personal operations system,
-      featuring a luminous wolf emblem,
-      moonlit mountains and cyan night sky">
-  </header>
-
   <div id="home" class="view active">
     <div class="content">
       <div class="topline">
@@ -467,7 +513,7 @@ footer {
   </div>
 
   <footer>
-    WOLF HQ • PERSONAL OPERATIONS SYSTEM • PROTOTYPE 0.2
+    WOLF HQ • PERSONAL OPERATIONS SYSTEM • PROTOTYPE 0.3 LAYOUT
   </footer>
 </main>
 </div>
