@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06131c">
+<title>WOLF HQ | Command Center</title>
+<style>
+:root {
+  --bg:#06131c;
+  --panel:#0a202a;
+  --cyan:#00f0e8;
+  --text:#e6f7fa;
+  --muted:#8caeb9;
+  --line:#24505a;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button { font:inherit; cursor:pointer; }
+button:focus-visible {
+  outline:2px solid white;
+  outline-offset:3px;
+}
+.app {
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:210px minmax(0,1fr);
+}
+.sidebar {
+  background:#071820;
+  border-right:1px solid var(--line);
+  padding:25px 14px;
+}
+.brand {
+  text-align:center;
+  padding:12px 0 28px;
+  border-bottom:1px solid var(--line);
+}
+.brand svg {
+  width:95px;
+  height:105px;
+  filter:drop-shadow(0 0 14px #00f0e855);
+}
+.brand h2 {
+  color:var(--cyan);
+  letter-spacing:4px;
+  margin:10px 0 5px;
+}
+.brand small {
+  color:var(--muted);
+  letter-spacing:2px;
+  font-size:9px;
+}
+nav {
+  display:grid;
+  gap:7px;
+  margin-top:25px;
+}
+.navbtn {
+  width:100%;
+  text-align:left;
+  padding:13px 15px;
+  color:#b5d3dc;
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:8px;
+}
+.navbtn.active,
+.navbtn:hover {
+  background:#10343d;
+  color:var(--cyan);
+  border-color:#286a72;
+}
+.navbtn span { margin-right:10px; }
+.sidebar-foot {
+  margin-top:40px;
+  text-align:center;
+  color:#608894;
+  font-size:10px;
+  letter-spacing:2px;
+}
+main { min-width:0; }
+.hero {
+  min-height:245px;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid #277079;
+  background:
+    radial-gradient(ellipse at 78% 35%,
+      #165d69 0%,transparent 46%),
+    linear-gradient(135deg,#0c2933,#030c13);
+}
+.hero-art {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:.85;
+}
+.hero-content {
+  position:relative;
+  z-index:1;
+  padding:48px 35px;
+  text-shadow:0 2px 15px #000;
+}
+.eyebrow {
+  color:var(--cyan);
+  letter-spacing:4px;
+  font-size:11px;
+}
+.hero h1 {
+  font-size:clamp(38px,6vw,76px);
+  letter-spacing:8px;
+  margin:10px 0;
+  line-height:1;
+}
+.hero p {
+  color:#c2e7e9;
+  font-size:14px;
+  letter-spacing:2px;
+}
+.hero-wolf {
+  position:absolute;
+  right:13%;
+  top:35px;
+  width:150px;
+  opacity:.45;
+  filter:drop-shadow(0 0 20px #00f0e8);
+}
+.content { padding:25px; }
+.topline {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+h3 {
+  margin:0;
+  color:var(--cyan);
+  letter-spacing:3px;
+  font-size:14px;
+}
+.status {
+  font-size:12px;
+  color:var(--muted);
+}
+.status b { color:var(--cyan); }
+.layout {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 245px;
+  gap:20px;
+}
+.modules {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.tile {
+  min-height:135px;
+  text-align:left;
+  padding:19px;
+  border:1px solid #27606a;
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 100% 0%,
+      #12515b66,transparent 65%),
+    linear-gradient(135deg,#102b36,#07171f);
+  color:var(--text);
+  transition:background .2s,border-color .2s;
+}
+.tile:hover {
+  border-color:var(--cyan);
+  background:#12343e;
+}
+.tile .symbol {
+  color:var(--cyan);
+  font-size:27px;
+  margin-bottom:12px;
+}
+.tile strong {
+  display:block;
+  font-size:15px;
+  letter-spacing:.5px;
+}
+.tile small {
+  display:block;
+  color:var(--muted);
+  margin-top:7px;
+  line-height:1.5;
+}
+.tile em {
+  display:block;
+  color:#55aeb4;
+  font-size:10px;
+  font-style:normal;
+  margin-top:12px;
+  letter-spacing:1px;
+}
+.panel {
+  background:linear-gradient(150deg,#102b35,#071820);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:19px;
+}
+.sidepanels { display:grid; gap:14px; align-content:start; }
+.panel h4 {
+  color:var(--cyan);
+  font-size:12px;
+  letter-spacing:2px;
+  margin:0 0 15px;
+}
+.date-large {
+  font-size:32px;
+  font-weight:bold;
+}
+.date-sub {
+  color:var(--muted);
+  font-size:13px;
+  margin-top:7px;
+}
+.panel p {
+  color:#b6d2d8;
+  font-size:13px;
+  line-height:1.7;
+}
+.mini-label {
+  color:#779eaa;
+  font-size:10px;
+  letter-spacing:2px;
+}
+.focus {
+  margin-top:18px;
+  min-height:110px;
+}
+.focus p { margin-bottom:0; }
+.view { display:none; }
+.view.active { display:block; }
+.placeholder {
+  max-width:650px;
+  margin:20px auto;
+  text-align:center;
+  padding:45px 25px;
+}
+.placeholder .big {
+  font-size:45px;
+  color:var(--cyan);
+}
+.placeholder h2 {
+  color:var(--cyan);
+  letter-spacing:2px;
+}
+.back {
+  margin-top:20px;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  background:transparent;
+  border-radius:8px;
+  padding:11px 20px;
+}
+footer {
+  padding:20px 25px;
+  color:#5e8b97;
+  font-size:10px;
+  letter-spacing:2px;
+  text-align:center;
+}
+@media(max-width:1000px) {
+  .layout { grid-template-columns:1fr; }
+  .sidepanels { grid-template-columns:repeat(3,1fr); }
+}
+@media(max-width:700px) {
+  .app { grid-template-columns:1fr; }
+  .sidebar { padding:10px; }
+  .brand { padding:5px; border:0; }
+  .brand svg { width:40px; height:45px; }
+  .brand h2 { font-size:13px; margin:0; }
+  .brand small,.sidebar-foot { display:none; }
+  nav {
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+    margin:8px 0 0;
+  }
+  .navbtn {
+    width:auto;
+    flex-shrink:0;
+    font-size:12px;
+    padding:10px;
+  }
+  .hero { min-height:190px; }
+  .hero-content { padding:40px 20px; }
+  .hero-wolf { right:5%; width:100px; }
+  .content { padding:15px; }
+  .modules { gap:10px; }
+  .tile { padding:14px; min-height:135px; }
+  .sidepanels { grid-template-columns:1fr; }
+}
+@media(max-width:390px) {
+  .modules { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  * { transition:none!important; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <svg viewBox="0 0 120 130" fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Geometric wolf emblem">
+      <path d="M12 9 L44 28 L60 19 L76 28 L108 9
+        L99 65 L86 101 L60 123 L34 101 L21 65 Z"
+        stroke="#00f0e8" stroke-width="3"/>
+      <path d="M24 29 L45 43 L60 37 L75 43 L96 29
+        L86 72 L73 88 L60 113 L47 88 L34 72 Z"
+        fill="#0c3942" stroke="#51ffff" stroke-width="2"/>
+      <path d="M35 60 L53 68 L43 74 Z
+        M85 60 L67 68 L77 74 Z"
+        fill="#00f0e8"/>
+      <path d="M53 85 L60 78 L67 85 L60 92 Z"
+        fill="#bfffff"/>
+      <path d="M43 89 L60 104 L77 89"
+        stroke="#00f0e8" stroke-width="2"/>
+    </svg>
+    <h2>WOLF HQ</h2>
+    <small>PERSONAL OPERATIONS</small>
+  </div>
+
+  <nav aria-label="Main navigation">
+    <button class="navbtn active" data-page="home">
+      <span>⌂</span>Dashboard
+    </button>
+    <button class="navbtn" data-page="journal">
+      <span>▤</span>Journal
+    </button>
+    <button class="navbtn" data-page="planner">
+      <span>▦</span>Planner
+    </button>
+    <button class="navbtn" data-page="appointments">
+      <span>◷</span>Appointments
+    </button>
+    <button class="navbtn" data-page="finances">
+      <span>◈</span>Finances
+    </button>
+    <button class="navbtn" data-page="habits">
+      <span>◎</span>Habits
+    </button>
+    <button class="navbtn" data-page="goals">
+      <span>△</span>Goals
+    </button>
+    <button class="navbtn" data-page="wishlist">
+      <span>☆</span>Wishlist
+    </button>
+    <button class="navbtn" data-page="settings">
+      <span>⚙</span>Settings
+    </button>
+  </nav>
+  <div class="sidebar-foot">SYSTEM v0.1</div>
+</aside>
+
+<main>
+  <header class="hero">
+    <svg class="hero-art" viewBox="0 0 1100 300"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true">
+      <circle cx="850" cy="95" r="70"
+        fill="#73f7ed" opacity=".20"/>
+      <circle cx="850" cy="95" r="57"
+        fill="#8dece9" opacity=".10"/>
+      <path d="M0 230 L150 120 L250 205 L390 75
+        L560 210 L710 100 L880 220 L1000 125
+        L1100 220 V300 H0Z"
+        fill="#164a57"/>
+      <path d="M0 260 L190 170 L320 250 L490 130
+        L650 245 L810 155 L970 240 L1100 170
+        V300 H0Z" fill="#0a303c"/>
+      <path d="M0 290 L100 230 L250 280 L390 220
+        L530 285 L710 220 L890 280 L1040 215
+        L1100 260 V300 H0Z"
+        fill="#061b26"/>
+      <g stroke="#0d3d43" stroke-width="4">
+        <path d="M55 300V240 M35 265L55 235L75 265
+          M30 280L55 250L80 280"/>
+        <path d="M950 300V225 M920 260L950 220L980 260
+          M915 280L950 240L985 280"/>
+        <path d="M1030 300V235
+          M1005 265L1030 230L1055 265
+          M1000 285L1030 250L1060 285"/>
+      </g>
+    </svg>
+
+    <svg class="hero-wolf" viewBox="0 0 120 130"
+      fill="none" aria-hidden="true">
+      <path d="M12 9L44 28L60 19L76 28L108 9
+        L99 65L86 101L60 123L34 101L21 65Z"
+        stroke="#00f0e8" stroke-width="3"/>
+      <path d="M24 29L45 43L60 37L75 43L96 29
+        L86 72L73 88L60 113L47 88L34 72Z"
+        fill="#0c3942" stroke="#51ffff"
+        stroke-width="2"/>
+      <path d="M35 60L53 68L43 74Z
+        M85 60L67 68L77 74Z" fill="#00f0e8"/>
+      <path d="M53 85L60 78L67 85L60 92Z"
+        fill="#bfffff"/>
+    </svg>
+
+    <div class="hero-content">
+      <div class="eyebrow">PERSONAL OPERATIONS SYSTEM</div>
+      <h1>WOLF HQ</h1>
+      <p>Your life. Your command.</p>
+    </div>
+  </header>
+
+  <div id="home" class="view active">
+    <div class="content">
+      <div class="topline">
+        <h3>DAILY OPERATIONS</h3>
+        <div class="status">
+          <b>●</b> COMMAND CENTER ONLINE
+        </div>
+      </div>
+
+      <div class="layout">
+        <div>
+          <div class="modules">
+            <button class="tile" data-page="journal">
+              <div class="symbol">▤</div>
+              <strong>Bullet Journal</strong>
+              <small>Notes • Logs • Reflections</small>
+              <em>INTEGRATION PLANNED</em>
+            </button>
+            <button class="tile" data-page="planner">
+              <div class="symbol">▦</div>
+              <strong>Daily Planner</strong>
+              <small>Schedule • Tasks • Focus</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="appointments">
+              <div class="symbol">◷</div>
+              <strong>Appointments</strong>
+              <small>Calendar • Events • Reminders</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="finances">
+              <div class="symbol">◈</div>
+              <strong>Personal Finances</strong>
+              <small>Budget • Spending • Overview</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="habits">
+              <div class="symbol">◎</div>
+              <strong>Habits</strong>
+              <small>Routines • Consistency • Progress</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="goals">
+              <div class="symbol">△</div>
+              <strong>Goals</strong>
+              <small>Milestones • Long-Term Plans</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <button class="tile" data-page="wishlist">
+              <div class="symbol">☆</div>
+              <strong>Wishlist</strong>
+              <small>Needs • Wants • Ideas</small>
+              <em>MODULE PLANNED</em>
+            </button>
+            <div class="panel">
+              <h4>TODAY'S FOCUS</h4>
+              <p>Future home for daily priorities and
+                important activities.</p>
+              <div class="mini-label">AWAITING MODULE DESIGN</div>
+            </div>
+          </div>
+
+          <div class="panel focus">
+            <h4>COMMAND CENTER STATUS</h4>
+            <p>
+              WOLF HQ dashboard foundation initialized.
+              Modules will be developed and tested
+              individually. Existing applications remain
+              independent.
+            </p>
+          </div>
+        </div>
+
+        <div class="sidepanels">
+          <div class="panel">
+            <h4>DATE & TIME</h4>
+            <div class="date-large" id="clock">--:--</div>
+            <div class="date-sub" id="date">Loading...</div>
+          </div>
+          <div class="panel">
+            <h4>SYSTEM STATUS</h4>
+            <p>
+              Dashboard: <b>Prototype</b><br>
+              Journal: Separate application<br>
+              Other modules: Planned
+            </p>
+          </div>
+          <div class="panel">
+            <h4>DEVELOPMENT</h4>
+            <p>
+              Version 0.1<br>
+              Visual foundation<br>
+              iPad-first design
+            </p>
+            <div class="mini-label">LOCAL BROWSER INTERFACE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="module-view" class="view">
+    <div class="content">
+      <div class="panel placeholder">
+        <div class="big">◇</div>
+        <h2 id="module-title">MODULE</h2>
+        <p id="module-description">
+          This module has not been implemented yet.
+        </p>
+        <button class="back" data-page="home">
+          Return to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    WOLF HQ • PERSONAL OPERATIONS SYSTEM • PROTOTYPE 0.1
+  </footer>
+</main>
+</div>
+
+<script>
+const modules = {
+  journal: {
+    title:"BULLET JOURNAL",
+    description:"Your existing Bullet Journal remains " +
+      "safe in its separate application. Integration " +
+      "will be planned and tested later."
+  },
+  planner: {
+    title:"DAILY PLANNER",
+    description:"Future daily and weekly planning module."
+  },
+  appointments: {
+    title:"APPOINTMENTS",
+    description:"Future calendar and appointment management."
+  },
+  finances: {
+    title:"PERSONAL FINANCES",
+    description:"Future financial overview. No financial " +
+      "information is stored in this prototype."
+  },
+  habits: {
+    title:"HABITS",
+    description:"Future routines and habit tracking."
+  },
+  goals: {
+    title:"GOALS",
+    description:"Future personal goals and milestones."
+  },
+  wishlist: {
+    title:"WISHLIST",
+    description:"Future needs, wants and ideas."
+  },
+  settings: {
+    title:"SETTINGS",
+    description:"Future application preferences and controls."
+  }
+};
+
+function showPage(page) {
+  const home = page === "home";
+  document.getElementById("home")
+    .classList.toggle("active",home);
+  document.getElementById("module-view")
+    .classList.toggle("active",!home);
+
+  document.querySelectorAll(".navbtn").forEach(btn => {
+    const selected = btn.dataset.page === page;
+    btn.classList.toggle("active",selected);
+    if(selected) {
+      btn.setAttribute("aria-current","page");
+    } else {
+      btn.removeAttribute("aria-current");
+    }
+  });
+
+  if(!home && modules[page]) {
+    document.getElementById("module-title")
+      .textContent = modules[page].title;
+    document.getElementById("module-description")
+      .textContent = modules[page].description;
+  }
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll("[data-page]").forEach(btn => {
+  btn.addEventListener("click",() => {
+    showPage(btn.dataset.page);
+  });
+});
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString([],{
+      hour:"numeric",minute:"2-digit"
+    });
+  document.getElementById("date").textContent =
+    now.toLocaleDateString([],{
+      weekday:"long",month:"long",
+      day:"numeric",year:"numeric"
+    });
+}
+updateClock();
+setInterval(updateClock,30000);
+</script>
+</body>
+</html>
